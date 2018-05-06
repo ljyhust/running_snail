@@ -37,9 +37,9 @@ public class MediaCommonController {
         PublicResponseDto resDto = new PublicResponseDto();
         OutputStream outputStream = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream(new File("E:\\data\\test_file\\input01.mp4"));
+            FileInputStream fileInputStream = new FileInputStream(new File("E:\\data\\test_file\\lanlianhua_leiting.mp3"));
             response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment; filename=output_aes01.mp4");
+            response.setHeader("Content-Disposition", "attachment; filename=lanlianhua_leiting_out.mp3");
             outputStream = response.getOutputStream();
             mediaCommonService.outputAudioFileWithCipher(fileInputStream, outputStream);
         } catch (Exception e) {

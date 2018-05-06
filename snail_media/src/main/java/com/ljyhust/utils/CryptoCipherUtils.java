@@ -11,6 +11,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 /**
+ * 流加密工具类
  * Created by Administrator on 2018/5/6.
  */
 public class CryptoCipherUtils {

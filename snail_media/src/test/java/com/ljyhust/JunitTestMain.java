@@ -26,7 +26,7 @@ public class JunitTestMain {
         try {
             CloseableHttpResponse response = httpClient.execute(httpPost);
             InputStream input = response.getEntity().getContent();
-            File file = new File("E:\\data\\test_file\\output01.mp4");
+            File file = new File("E:\\data\\test_file\\lanlianhua_leiting_out_decode.mp3");
             FileOutputStream fos = new FileOutputStream(file);
             CryptoCipherUtils.decode(input, fos, "edBfDgOJ0VTEvhDOiO7rug==");
         } catch (IOException e) {
