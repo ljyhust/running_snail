@@ -4,6 +4,7 @@ import com.ljyhust.utils.AESUtils;
 import com.ljyhust.utils.CryptoCipherUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -22,7 +23,8 @@ public class MediaCommonService {
 
     private Logger logger = LoggerFactory.getLogger(MediaCommonService.class);
 
-    private String key = "0ZRmCCkKnd4eO/QoU8X0uA==";
+    @Value("${aes.key}")
+    private String key;
 
     public void outputAudioFileWithAES(FileInputStream inputStream, OutputStream outputStream) throws IOException {
         FileChannel fsChannel = inputStream.getChannel();

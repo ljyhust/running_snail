@@ -28,7 +28,7 @@ public class JunitTestMain {
             InputStream input = response.getEntity().getContent();
             File file = new File("E:\\data\\test_file\\output01.mp4");
             FileOutputStream fos = new FileOutputStream(file);
-            CryptoCipherUtils.decode(input, fos, "0ZRmCCkKnd4eO/QoU8X0uA==");
+            CryptoCipherUtils.decode(input, fos, "edBfDgOJ0VTEvhDOiO7rug==");
         } catch (IOException e) {
             e.printStackTrace();
         }

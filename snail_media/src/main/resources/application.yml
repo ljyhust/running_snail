@@ -4,3 +4,7 @@ logging:
   level:
     root: info
 
+# AES加密密钥
+aes:
+  key: edBfDgOJ0VTEvhDOiO7rug==
+
