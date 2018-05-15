@@ -11,4 +11,32 @@ package com.ljyhust.algorithm;
  */
 public class TopKthWithHeap {
 
+    private int k;
+
+    private int[] topk;
+
+    public void dealWithInput(int[] array) {
+        // 判断K个元素
+        int len = array.length;
+
+        if (len > k) {
+            topk = new int[k];
+        } else {
+            topk = new int[len];
+        }
+
+        for (int n = 0; n < topk.length; n++) {
+            topk[n] = array[n];
+        }
+
+        HeapStruct heap = new HeapStruct(topk);
+        if (len > k) {
+            for (int i = k; i < len; i++) {
+                if (array[i] > topk[1]) {
+                    heap.deleteMin();
+                }
+                heap.insert(array[i]);
+            }
+        }
+    }
 }
