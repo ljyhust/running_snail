@@ -5,6 +5,7 @@ logging:
     root: info
 
 # AES加密密钥
-aes:
-  key: edBfDgOJ0VTEvhDOiO7rug==
+secret:
+  aes: edBfDgOJ0VTEvhDOiO7rug==
+  rc4: SLe8h5yjmVzYnHNKV1K20g==
 

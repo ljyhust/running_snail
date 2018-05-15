@@ -27,7 +27,7 @@ public class MediaCommonController {
     private MediaCommonService mediaCommonService;
 
     /**
-     * 下载音频文件接口
+     * 下载音频文件接口，支持断点续传
      * @param request
      * @return
      */
@@ -37,18 +37,35 @@ public class MediaCommonController {
         PublicResponseDto resDto = new PublicResponseDto();
         OutputStream outputStream = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream(new File("E:\\data\\test_file\\lanlianhua_leiting.mp3"));
+            File outFile = new File("E:\\data\\test_files\\GEM_paomo.mp3");
+            FileInputStream fileInputStream = new FileInputStream(outFile);
             response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment; filename=lanlianhua_leiting_out.mp3");
+            response.setHeader("Content-Disposition", "attachment; filename=GEM_paomo.mp3");
+            response.setHeader("Accept-Ranges", "bytes");
+            Long partLength = Long.valueOf(0);
+            Long fileLength = Long.valueOf(outFile.length());
+            if (null != request.getHeader("Range")) {
+                response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+                partLength = Long.valueOf(request.getHeader("Range").replace("bytes=", "").replace("-", ""));
+            }
+            response.setHeader("Content-Length", String.valueOf(fileLength - partLength));
+            if (partLength != 0) {
+                StringBuffer strBuffer = new StringBuffer("bytes ");
+                strBuffer.append(partLength).append("-");
+                strBuffer.append(fileLength - 1).append("/");
+                strBuffer.append(fileLength);
+                response.setHeader("Content-Range", strBuffer.toString());
+                fileInputStream.skip(partLength);
+            }
             outputStream = response.getOutputStream();
-            mediaCommonService.outputAudioFileWithCipher(fileInputStream, outputStream);
+            mediaCommonService.outputAudioFileRC4(fileInputStream, outputStream);
         } catch (Exception e) {
             logger.error(">>>>>> 读写音频文件出错 {} <<<<<", e);
         } finally {
             if (null != outputStream) {
                 try {
                     outputStream.flush();
-                    outputStream.close();
+                    //outputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

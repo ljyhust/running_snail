@@ -23,7 +23,7 @@ public class MediaCommonService {
 
     private Logger logger = LoggerFactory.getLogger(MediaCommonService.class);
 
-    @Value("${aes.key}")
+    @Value("${secret.rc4}")
     private String key;
 
     public void outputAudioFileWithAES(FileInputStream inputStream, OutputStream outputStream) throws IOException {
@@ -45,5 +45,9 @@ public class MediaCommonService {
 
     public void outputAudioFileWithCipher(InputStream inputStream, OutputStream outputStream) {
         CryptoCipherUtils.encode(inputStream, outputStream, this.key);
+    }
+
+    public void outputAudioFileRC4(InputStream inputStream, OutputStream outputStream) {
+        CryptoCipherUtils.decodeWithRC4(inputStream, outputStream, this.key);
     }
 }
