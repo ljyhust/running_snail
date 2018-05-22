@@ -53,7 +53,7 @@ public class TriesTree {
             i++;
         }
         // 深度搜索
-
+        return null;
     }
 
     public String[] dst(TriesNode node) {
@@ -64,6 +64,7 @@ public class TriesTree {
         for (Map.Entry<String, TriesNode> elem : entries) {
             dst(elem.getValue());
         }
+        return null;
     }
 
     /**
