@@ -27,4 +27,17 @@ public class RecurrenceCase {
         }
         return res;
     }
+
+    /**
+     * 变态跳台阶问题  f(n) = f(n-1) + f(n-2) + .... + f(1) + 1
+     * 推出===>  f(n) = 2f(n-1)
+     * @param target
+     * @return
+     */
+    public int jumpFloorII(int target) {
+        if (target <= 1) {
+            return 1;
+        }
+        return 2 * jumpFloorII(target - 1);
+    }
 }
