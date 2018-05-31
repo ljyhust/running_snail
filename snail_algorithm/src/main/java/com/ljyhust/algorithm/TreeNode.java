@@ -1,11 +1,15 @@
 package com.ljyhust.algorithm;
 
+/**
+ * Created by Administrator on 2018/5/30.
+ */
 public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
 
-    TreeNode(int x) {
-        val = x;
+    public TreeNode(int val) {
+        this.val = val;
+
     }
 }
