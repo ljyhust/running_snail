@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -67,6 +68,36 @@ public class PermutationString {
         temp=chs[i];
         chs[i]=chs[j];
         chs[j]=temp;
+    }
+
+    /**
+     * 在字符串中找出第一个出现一次的字符索引位置
+     * @param str
+     * @return
+     */
+    public int firstNotRepeatingChar(String str) {
+        if (null == str || "".equals(str)) {
+            return -1;
+        }
+        // 每个字符最新的位置index，如果字符存在，就设置Integer >> 10000
+        // 遍历map.values返回非null最小值
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        for (int i = 0; i < str.length(); i++) {
+            if (map.containsKey(str.charAt(i))) {
+                map.put(str.charAt(i), 10000);
+                continue;
+            }
+            map.put(str.charAt(i), i);
+        }
+
+        int res = 10000;
+        for (Integer index : map.values()) {
+            if (index < res) {
+                res = index;
+            }
+        }
+
+        return res;
     }
 
     @Test
