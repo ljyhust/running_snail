@@ -54,6 +54,7 @@
 
 	<modules>
 		<module>snail_media</module>
+		<module>manage_platform</module>
 	</modules>
 
 	<build>

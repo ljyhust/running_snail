@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  *
@@ -213,6 +214,67 @@ public class BinaryTree {
         return res;
     }
 
+    /**
+     * 查找某个节点的路径
+     * @param root
+     * @param selected
+     * @return
+     */
+    public List<TreeNode> getPathOfNode(TreeNode root, TreeNode selected) {
+        Stack<TreeNode> path = new Stack<>();
+        findPath(root, selected.val, path);
+        return new ArrayList<>(path);
+    }
+
+    boolean isNodeFound = false;
+    public void findPath(TreeNode root, int target, Stack<TreeNode> path) {
+        if (null == root) {
+            return;
+        }
+        path.push(root);
+        if (root.val == target) {
+            isNodeFound = true;
+            return;
+        }
+        if (!isNodeFound && null != root.left) {
+            findPath(root.left, target, path);
+        }
+        if (!isNodeFound && null != root.right) {
+            findPath(root.right, target, path);
+        }
+
+        if (!isNodeFound) {
+            path.pop();
+        }
+    }
+
+    /**
+     * 寻找最近公共祖先
+     * @param root
+     * @param node1
+     * @param node2
+     * @return
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode node1, TreeNode node2) {
+        if (root == null) {
+            return null;
+        }
+        if (node1.val == root.val || node2.val == root.val) {
+            return root;
+        }
+
+        // 找左子树
+        TreeNode left = lowestCommonAncestor(root.left, node1, node2);
+
+        TreeNode right = lowestCommonAncestor(root.right, node1, node2);
+
+        if (null != left && null != right) { //左右子树都找到对应的节点，则root为公共节点
+            return root;
+        }
+
+        return left == null ? right : left;
+    }
+
     @Test
     public void testMain() {
         TreeNode root = new TreeNode(5);
@@ -230,6 +292,29 @@ public class BinaryTree {
         printTreeByMidium(root, res);
         System.err.println(res);
         System.err.println(isSymmtric(root));
+    }
+
+    @Test
+    public void testPath() {
+        TreeNode root = new TreeNode(7);
+        root.left = new TreeNode(5);
+        root.right = new TreeNode(4);
+
+        root.left.left = new TreeNode(11);
+        root.left.right = new TreeNode(9);
+
+        //root.right.left = new TreeNode(7);
+        root.right.right = new TreeNode(6);
+        /*System.err.println(Serialize(root));
+
+        List<String> res = new ArrayList<>();
+        printTreeByMidium(root, res);
+        System.err.println(res);
+        System.err.println(isSymmtric(root));*/
+        List<TreeNode> pathOfNode = getPathOfNode(root, new TreeNode(6));
+        for (TreeNode elem : pathOfNode) {
+            System.err.println(elem.val + ",");
+        }
     }
 
 }
