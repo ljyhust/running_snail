@@ -29,4 +29,22 @@ public class TestMain {
         new ListAlgorithmLearningMergeKList().mergeKLists(listNodes);
     }
 
+    @Test
+    public void testInsertSort() {
+        int [] a = {1, 1};
+        System.err.println(insertSort(a));
+    }
+
+    public int[] insertSort(int[] a) {
+        for (int i = 1; i < a.length; i++) {
+            int temp = a[i];
+            int j = 0;
+            for (j = i; j > 0 && temp < a[j - 1]; j--) {
+                a[j] = a[j - 1];
+            }
+            a[j] = temp;
+        }
+        return a;
+    }
+
 }

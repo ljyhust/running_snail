@@ -1,12 +1,16 @@
 spring:
   application:
-    name: manage_config
+    name: manage-config
   cloud:
     config:
       server:
         git:
           uri: https://github.com/ljyhust/running_snail
           search-paths: manage_config_repo
+
 server:
   port: 10010
+logging:
+  level:
+    org.springframework: DEBUG
 
