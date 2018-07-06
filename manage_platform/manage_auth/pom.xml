@@ -3,45 +3,38 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>manage_platform</artifactId>
+	<groupId>com.ljyhust</groupId>
+	<artifactId>manage_auth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
-	<name>manage_platform</name>
-	<description>Demo project for Spring Boot</description>
+	<name>manage_auth</name>
+	<description>oauth2认证服务器</description>
 
 	<parent>
 		<groupId>com.ljyhust</groupId>
-		<artifactId>running_snail</artifactId>
+		<artifactId>manage_platform</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<modules>
-		<module>manage_config</module>
-		<module>manage_auth</module>
-		<module>manage_registry</module>
-	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<spring-cloud.version>Brixton.RELEASE</spring-cloud.version>
 	</properties>
 
 	<dependencies>
-	</dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-dependencies</artifactId>
+		</dependency>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
