@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: manage-registry
+security:
+  basic:
+    enabled: true
+  user:
+    name: ${REGISTRY_USERNAME:user}
+    password: ${REGISTRY_PASSWORD:admin}
+server:
+  port: 10011
+
+# eurek服务端配置
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: manage-registry
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    server:
+      waitTimeInMsWhenSyncEmpty: 0
+    service-url:
+      defaultZone: http://${REGISTRY_USERNAME:user}:${REGISTRY_PASSWORD:admin}@${spring.application.name}:${server.port}/eureka/
+

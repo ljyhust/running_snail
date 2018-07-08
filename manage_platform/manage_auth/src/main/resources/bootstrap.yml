@@ -3,3 +3,19 @@ spring:
     name: manage-auth
   cloud:
     config:
+      discovery:
+        enabled: true
+        service-id: manage-config
+      username: ${CONFIG_USERNAME:user}
+      password: ${CONFIG_PASSWORD:admin}
+
+server:
+  port: 10012
+  context-path: /manageAuth
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://${REGISTRY_USERNAME:user}:${REGISTRY_PASSWORD:admin}@manage-registry:10011/eureka/
+
