@@ -1,0 +1,15 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+          defaultZone: http://manage-registry:10011/eureka/
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://manage-auth:10012/manageAuth/current
+    client:
+      accessTokenUri: http://manage-auth:10012/manageAuth/oauth/token
+      grant-type: client_credentials
+      scope: server
