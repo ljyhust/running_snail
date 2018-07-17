@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: manage-gateway
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: manage-config
+      username: ${CONFIG_USERNAME:user}
+      password: ${CONFIG_PASSWORD:admin}
+
+server:
+  port: 10013
+  context-path: /apiManager
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://${REGISTRY_USERNAME:user}:${REGISTRY_PASSWORD:admin}@manage-registry:10011/eureka/
+

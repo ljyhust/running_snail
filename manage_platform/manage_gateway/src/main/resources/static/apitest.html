@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>API测试</title>
+<meta charset="utf-8">
+
+<link href="static/ace/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="static/ace/css/font-awesome.min.css" />
+
+<!--[if IE 7]>
+  <link rel="stylesheet" href="static/ace/css/font-awesome-ie7.min.css" />
+<![endif]-->
+
+<!-- page specific plugin styles -->
+<link rel="stylesheet" href="static/ace/css/jquery-ui-1.10.3.full.min.css" />
+<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<link rel="stylesheet" href="static/ace/css/ui.jqgrid.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="static/ace/css/ace.min.css" />
+<link rel="stylesheet" href="static/ace/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="static/ace/css/ace-skins.min.css" />
+<link rel='stylesheet' href="static/css/jquery.jsonview.css"   />
+<link rel='stylesheet' href='static/css/style.css' />
+
+<!--[if lte IE 8]>
+  <link rel="stylesheet" href="static/ace/css/ace-ie.min.css" />
+<![endif]-->
+
+<!-- inline styles related to this page -->
+<!--[if !IE]> -->
+
+<script type="text/javascript">
+	window.jQuery || document.write("<script src='static/ace/js/jquery-2.0.3.min.js'>"+"<"+"script>");
+</script>
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='static/ace/js/jquery-1.10.2.min.js'>"+"<"+"script>");
+</script>
+<![endif]-->
+ 
+<script src="static/ace/js/jquery.slimscroll.min.js"></script>
+<script src="static/ace/js/jquery.easy-pie-chart.min.js"></script>
+<script src="static/ace/js/jquery.sparkline.min.js"></script>
+<script src="static/ace/js/flot/jquery.flot.min.js"></script>
+<script src="static/ace/js/flot/jquery.flot.pie.min.js"></script>
+<script src="static/ace/js/flot/jquery.flot.resize.min.js"></script>
+<!-- ace settings handler -->
+<script src="static/ace/js/ace-extra.min.js"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="static/ace/js/html5shiv.js"></script>
+<script src="static/ace/js/respond.min.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+	if("ontouchend" in document) document.write("<script src='static/ace/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
+</script>
+<script src="static/ace/js/bootstrap.min.js"></script>
+<script src="static/ace/js/typeahead-bs2.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<script src="static/ace/js/jquery-ui-1.10.3.full.min.js"></script>
+<script src="static/ace/js/jquery.ui.touch-punch.min.js"></script>
+<script src="static/ace/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="static/ace/js/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="static/ace/js/jqGrid/i18n/grid.locale-en.js"></script>
+
+<!--[if lte IE 8]>
+  <script src="static/ace/js/excanvas.min.js"></script>
+<![endif]-->
+
+<!-- ace scripts -->
+
+<script src="static/ace/js/ace-elements.min.js"></script>
+<script src="static/ace/js/ace.min.js"></script>
+
+<script src="static/js/jquery.jsonview.js"   ></script>
+<script src="static/js/my.js"   ></script>
+<script src="static/js/bootstrapLoading.js"   ></script>
+<script src="static/js/md5.js"   ></script>
+<script src="static/js/bootstrap-typeahead.js"></script>
+<!--  <script src="static/js/json2.js"></script>-->
+<script>
+
+var g_reqId = null;
+jQuery(function($) {
+	
+	initApi();
+	
+	autoSend();
+	
+	
+	$("#now_url").html(getApiHost());
+});
+
+function initApi(){
+	var callback = function (result){
+		$('#api').typeahead({
+		      source: function(query, process) {
+		         return result.data;
+		      }
+		});
+	}
+	var params = {};
+	sendApi(callback, "systemtool/queryAllApi", params);
+}
+    
+function autoSend(){
+	var reqId = getQueryString("reqId");
+	var callback = function(result){
+		 $("#api").val(result.data.api);
+		 var o = JSON.parse(result.data.requestParams);
+		 if(isOldVersion()){
+			 $("#token").val(o.atoken);
+			 o.atoken=undefined;
+		 }else{
+			 $("#token").val(o.token);
+			 o.token=undefined;
+		 }
+		 var s = JSON.stringify(o,undefined, 4);
+		 $("#request_params").val(s);
+		 send();
+	}
+	if(reqId){
+		var params = {"reqId":reqId};
+		sendApi(callback, "systemtool/queryLogDetail", params);
+	}
+}
+function createToken(api_url){
+	var callback = function(result){
+		if(result.code ){
+			$("#token").val(result.msg);
+		}else{
+			if(result.data.token != null){
+				$("#token").val(result.data.token);
+			}else{
+				$("#token").val(result.data.atoken);
+			}
+		}
+	}
+	var params = {"account":$("#phone").val(), "passwd":hex_md5($("#password").val()) , "phone":$("#phone").val(),"password":hex_md5($("#password").val()),"deviceid":11,"apptype":1};
+	sendApi(callback, api_url, params);
+}
+
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+
+function send(){
+	var params = {};
+	if($("#request_params").val().indexOf("{") >5 || $("#request_params").val().indexOf("{") == -1)   {  
+		params = getDataUrl($("#request_params").val());
+	}else{
+		params = JSON.parse( $("#request_params").val()); 
+	}
+	
+	var headers = {};
+	if($('#request_headers').val()){
+		headers = JSON.parse($('#request_headers').val());
+	}
+	
+	if($("#token").val() != null && $("#token").val() != ""){
+		params.token = $("#token").val();
+		params.atoken = $("#token").val();
+	}
+	params.headers = headers;
+	
+	var callback = function(result){
+		g_reqId = result.reqId;
+		$("#dl_response_content").JSONView(result);
+		$.bootstrapLoading.end();
+	}
+	var val=$('input:radio[name="method"]:checked').val();
+    if(val!=null){
+    	params.method = val;
+    }
+	sendApi(callback, $("#api").val().replace(".do",""), params);
+	$.bootstrapLoading.start();
+}
+
+function showError(){
+	var callback = function(result){
+		var dialog = $( "#dialog-message" ).removeClass('hide').dialog({
+			modal: true,
+			height: 500,
+	        width: 800, 
+		});
+		$("#dl_api").html("["+result.data.api + "] / [" + result.data.reqId+"]");
+		$("#dl_error_trace").html(result.data.errorTrace);
+		$.bootstrapLoading.end();
+	}
+	var params = {"reqId":g_reqId};
+	sendApi(callback, "systemtool/queryLogDetail", params);
+	$.bootstrapLoading.start();
+}
+function getDataUrl(params) {
+	  // separate the data into an array, in case the are multiple pairs name=value
+	  var ar_url_data = params.split('&');
+
+	  // traverse the array, and adds into an object elements name:value
+	  var data_url = {};
+	  for(var i=0; i<ar_url_data.length; i++) {
+	    var ar_val = ar_url_data[i].split('=');           // separate name and value from each pair
+	    data_url[ar_val[0]] = ar_val[1];
+	  }
+
+	  return data_url;
+}
+
+ 
+</script>
+
+</head>
+
+<body >
+<div class="main-container" id="main-container" >
+	<div class="page-content">
+		<div class="page-header">
+			<h1>
+				接口测试  <span id="now_url" style="font-size:12px;"></span>
+			</h1>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">登录账号/密码</label>
+						<div class="col-sm-9">
+							<span class="input-icon input-icon-right">
+								<input type="text" id="phone" value="13090000027">
+							</span>/
+							<span class="input-icon input-icon-right">
+								<input type="text" id="password" value="aaaaaa">
+							</span>
+							<button class="btn btn-info" type="button" onclick="createToken('auth/login')">生成TOKEN</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">TOKEN</label>
+						<div class="col-sm-9">
+							<input type="text" id="token" value="" class="col-xs-10 col-sm-11" placeholder="上方输入账号/密码,点击按钮生成TOKEN，默认用户13090000027。也可自行拷贝TOKEN到这里">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1">接口名</label>
+						<div class="col-sm-9">
+							<input type="text" id="api" value="" class="col-xs-10 col-sm-6" data-provide="typeahead"  placeholder="输入接口关键词自动提示,如 api"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1">接口参数</label>
+						<div class="col-sm-9">
+							<textarea class="form-control" style="width:95%;height: 200px;" id="request_params" placeholder='url: a=1&b=2&c=3 或  json: {"a":"1","b":"2","c":3}' ></textarea>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1">请求头</label>
+						<div class="col-sm-9">
+							<textarea class="form-control" style="width:95%;height: 40px;" id="request_headers" placeholder='json: {"a":"1","b":"2","c":3}' ></textarea>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">GET/POST</label>
+						<div class="col-sm-9">
+							<label >
+								<input id="method_get" name="method" value="GET" type="radio" class="ace">
+								<span class="lbl">GET</span>
+							</label>
+							<label style="padding-left: 10px;">
+								<input id="method_post"  name="method"  value="POST" type="radio" checked="checked" class="ace">
+								<span class="lbl">POST</span>
+							</label>
+							
+							<button class="btn btn-info" style="margin-left: 300px;" onclick="send()" type="button">发送</button>
+							<button class="btn btn-info" style="margin-left: 50px;" onclick="showError()" type="button">查看异常</button>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">返回内容</label>
+						<div class="col-sm-9">
+							<div id="dl_response_content"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="dialog-message" class="hide">
+	<h2>接口/REQ_ID</h2>
+	<p id="dl_api" ></p>
+	<h2>异常</h2>
+	<pre id="dl_error_trace" ></pre>
+	
+</div>
+</body>
+</html>
+
+
+
+
+

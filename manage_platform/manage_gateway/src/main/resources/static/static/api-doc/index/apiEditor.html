@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8" />
+    <title>接口文档编辑</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/editormd.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+</head>
+<body>
+    <div id="layout">
+        <header>
+            <h1>接口文档编辑</h1>
+            <div class="btn-group">
+                <button class="btn btn-default" onclick="javascript:history.go(-1);">后退</button>
+                <button class="btn btn-default" onclick="javascript:onSave(null);">保存</button>
+             </div>
+        </header>
+        <div id="apidoc-edit-view">
+            <textarea style="display: none;" name="apidoc-edit-view-doc">
+            </textarea>
+        </div>
+    </div>
+<script src="js/jquery.min.js"></script>
+<script src="js/main.js"></script>
+<script src="../editormd.min.js"></script>
+<script type="text/javascript">
+var apidocEdit;
+var apiDocId = $.getUrlParam("id");  //获取页面跳转url的id
+//var baseUrl = window.parent.getApiHost();  //当前项目url
+var baseUrl = "/platform/api";
+$(function() {
+     $.get( baseUrl + "/doc/queryApiHtml.do",
+         {
+             id : apiDocId
+         },
+         function(markdown) {
+             apidocEdit = editormd("apidoc-edit-view", {
+             width   : "90%",
+             height  : 640,
+             syncScrolling : "single",
+             path    : "../lib/",
+             saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+             markdown : markdown.data[0].pageContext,
+
+             toolbarIcons : function() {
+             return ["save", "|", "undo", "redo", "|", "bold", "hr", "|", "preview", "watch", "|", "fullscreen", "help"]
+             },
+
+             toolbarIconsClass : {
+                 save : "fa fa-floppy-o fa-3"  // 指定一个FontAawsome的图标类
+             },
+
+             //按钮事件
+             //cm为CodeMirror对象
+             //iconJquery代表jquery对象
+             toolbarHandlers : {
+                 save : function(cm, iconJquery, cursor, selection) {
+                	 onSave(this);
+                 }
+             },
+             //图标文本提示
+             lang : {
+	             toolbar : {
+	                 save : "保存",
+	                 }
+             },
+         });
+    });
+});  //
+
+var onSave = function(markdown) {
+	var editor = markdown;
+    if (null === markdown) {
+        editor = apidocEdit;
+    }
+    $.ajax({
+        url : baseUrl + "/doc/modifyApiHtml.do",
+        type : "post",
+        data : {
+            id : apiDocId,
+            pageContext : editor.getMarkdown()
+        },
+        success : function(resData){
+            if (resData.code === 0) {
+                window.location.href = "apiView.html?" + "id=" + apiDocId;
+            }
+        }
+    });
+}
+    
+</script>
+</body>
+</html>
