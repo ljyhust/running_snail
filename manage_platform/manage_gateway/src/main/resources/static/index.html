@@ -105,10 +105,10 @@
     		 }
     	 }
     	 
-    	 $("#selhost").val(getCookie("huaao_host_list_now"));
+    	 $("#selhost").val(getCookie("ehr_host_list_now"));
     	 
     	 $("#selhost").change(function(){
-    		 setCookie("huaao_host_list_now",$('#selhost').val());
+    		 setCookie("ehr_host_list_now",$('#selhost').val());
     		 window.location.reload();
     	 });
     	 
@@ -120,24 +120,24 @@
     			}); 
     	 });
     	 $("#delUrl").click(function(){
-    		 var huaao_host_list = getCookie("huaao_host_list");
-    		 huaao_host_list = huaao_host_list.replace($('#selhost option:selected').val(),"");
-    		 setCookie("huaao_host_list",huaao_host_list);
+    		 var ehr_host_list = getCookie("ehr_host_list");
+    		 ehr_host_list = ehr_host_list.replace($('#selhost option:selected').val(),"");
+    		 setCookie("ehr_host_list",ehr_host_list);
     		 $('#selhost option:selected').remove();
-    		 setCookie("huaao_host_list_now",$('#selhost').val());
+    		 setCookie("ehr_host_list_now",$('#selhost').val());
     		 
     	 });
     	 
     	 $("#addNewUrl").click(function () {
     		 
-    		 var huaao_host_list = getCookie("huaao_host_list");
+    		 var ehr_host_list = getCookie("ehr_host_list");
         	 //检查是否存在
-        	 if(!$("#new_host_url").val() || huaao_host_list.indexOf($("#new_host_url").val()) > -1){
+        	 if(!$("#new_host_url").val() || ehr_host_list.indexOf($("#new_host_url").val()) > -1){
         		 return ;
         	 }
         	 
-        	 setCookie ("huaao_host_list", huaao_host_list+$("#new_host_url").val()+",");
-        	 setCookie("huaao_host_list_now",$("#new_host_url").val() );
+        	 setCookie ("ehr_host_list", ehr_host_list+$("#new_host_url").val()+",");
+        	 setCookie("ehr_host_list_now",$("#new_host_url").val() );
         	 var index =  $('#selhost option').length ;
         	 $("#selhost").append("<option value='0'>"+$("#new_host_url").val()+"</option>");
         	 
@@ -159,7 +159,7 @@
 		<div class="navbar-container" id="navbar-container">
 			<div class="navbar-header pull-left">
 				<a class="navbar-brand">
-					<small> <i class="icon-leaf"></i> 接口系统支撑平台 </small>
+					<small> <i class="icon-leaf"></i> EHR接口系统支撑平台 </small>
 				</a> 
 			</div> 
 			
@@ -191,13 +191,13 @@
 						<span class="menu-text">接口测试</span>
 					</a>
 				</li>
-				<li class="li " url="http://192.168.7.102:8080/">
+				<li class="li " url="http://172.16.140.75:10099/jenkins/login?from=%2Fjenkins%2F">
 					<a href="#" >
 						<i class="icon-dashboard" ></i>
 						<span class="menu-text">自动化部署</span>
 					</a>
 				</li>
-				<li class="li " url="/static/api-doc/index/apiView.html">
+				<li class="li " url="http://192.168.2.21:12080/index/apiView.html">
 					<a href="#" >
 						<i class="icon-dashboard" ></i>
 						<span class="menu-text">接口文档</span>

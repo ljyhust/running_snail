@@ -1,17 +1,17 @@
 
 function getApiHost(){
-	var huaao_host_list_now = getCookie("huaao_host_list_now");
-	if(!huaao_host_list_now){
-		setCookie ("huaao_host_list_now", "http://"+window.location.host+"/api");
+	var ehr_host_list_now = getCookie("ehr_host_list_now");
+	if(!ehr_host_list_now){
+		setCookie ("ehr_host_list_now", "http://"+window.location.host+"/api");
 	} 
-	return getCookie("huaao_host_list_now");
+	return getCookie("ehr_host_list_now");
 }
 function getApiHostList(){
-	var huaao_host_list = getCookie("huaao_host_list");
-	if(!huaao_host_list){
-		setCookie ("huaao_host_list", "http://"+window.location.host+"/api,");
+	var ehr_host_list = getCookie("ehr_host_list");
+	if(!ehr_host_list){
+		setCookie ("ehr_host_list", "http://"+window.location.host+"/api,");
 	}
-	strs = getCookie("huaao_host_list").split(",");
+	strs = getCookie("ehr_host_list").split(",");
 	return strs;
 }
 function setCookie(name,value) 
