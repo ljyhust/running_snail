@@ -4,7 +4,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ljyhust</groupId>
 	<artifactId>snail_media</artifactId>
-	<version>${project.version}</version>
+	<version>0.0.1-SNAPSHOT</version>
+	<dependencies>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.30</version>
+		</dependency>
+	</dependencies>
 	<packaging>jar</packaging>
 
 	<name>snail_media</name>
@@ -14,7 +26,6 @@
 		<groupId>com.ljyhust</groupId>
 		<artifactId>running_snail</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<build>
@@ -23,6 +34,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
 		</plugins>
 	</build>
 
