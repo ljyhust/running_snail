@@ -19,6 +19,7 @@
 		<module>manage_config</module>
 		<module>manage_auth</module>
 		<module>manage_registry</module>
+		<module>manage_gateway</module>
 	</modules>
 
 	<properties>

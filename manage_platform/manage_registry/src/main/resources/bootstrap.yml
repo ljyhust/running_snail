@@ -1,6 +1,15 @@
 spring:
+  cloud:
+    config:
+      profile: dev
+      discovery:
+        enabled: true
+        uri: http://localhost:10010/
+      username: ${CONFIG_USERNAME:user}
+      password: ${CONFIG_PASSWORD:admin}
   application:
     name: manage-registry
+
 security:
   basic:
     enabled: true
@@ -10,16 +19,4 @@ security:
 server:
   port: 10011
 
-# eurek服务端配置
-eureka:
-  instance:
-    prefer-ip-address: true
-    hostname: manage-registry
-  client:
-    registerWithEureka: false
-    fetchRegistry: false
-    server:
-      waitTimeInMsWhenSyncEmpty: 0
-    service-url:
-      defaultZone: http://${REGISTRY_USERNAME:user}:${REGISTRY_PASSWORD:admin}@${spring.application.name}:${server.port}/eureka/
 
