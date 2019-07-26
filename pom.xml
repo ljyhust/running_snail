@@ -98,7 +98,7 @@
 		</plugins>
 	</build>
 
-	<pluginRepositories>
+	<!--<pluginRepositories>
 		<pluginRepository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
@@ -115,7 +115,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
-	</pluginRepositories>
+	</pluginRepositories>-->
 
 
 </project>
