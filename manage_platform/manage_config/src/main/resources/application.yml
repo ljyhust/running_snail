@@ -5,7 +5,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/ljyhust/running_snail
+          #uri: https://github.com/ljyhust/running_snail
+          uri: file:///E:/JAVA/GitHubCode/running_snail
           search-paths: manage_config_repo
 
 server:

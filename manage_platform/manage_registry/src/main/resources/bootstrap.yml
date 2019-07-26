@@ -1,14 +1,11 @@
 spring:
-  cloud:
-    config:
-      profile: dev
-      discovery:
-        enabled: true
-        uri: http://localhost:10010/
-      username: ${CONFIG_USERNAME:user}
-      password: ${CONFIG_PASSWORD:admin}
   application:
     name: manage-registry
+  profiles:
+    active: dev
+
+server:
+  port: 10011
 
 security:
   basic:
@@ -16,7 +13,5 @@ security:
   user:
     name: ${REGISTRY_USERNAME:user}
     password: ${REGISTRY_PASSWORD:admin}
-server:
-  port: 10011
 
 

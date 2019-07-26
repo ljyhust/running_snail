@@ -1,5 +1,3 @@
-server:
-  port: 10011
 # eurek服务端配置
 eureka:
   instance:
