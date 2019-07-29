@@ -1,6 +1,7 @@
 package com.ljyhust.auth.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -8,7 +9,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
  * 配置认证服务器
@@ -17,8 +21,8 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter{
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    /*@Autowired
+    private AuthenticationManager authenticationManager;*/
 
     /**
      * 配置认证客户端信息，两种：一种是密码模式用于用户登录
@@ -38,6 +42,19 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .scopes("server");
     }
 
+    @Bean
+    public TokenStore jwtTokenStore() {
+        JwtAccessTokenConverter jwtAccessTokenConverter = jwtAccessTokenConverter();
+        System.out.println(jwtAccessTokenConverter);
+        return new JwtTokenStore(jwtAccessTokenConverter);
+    }
+
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter(){
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        return converter;
+    }
+
     /**
      * 指定token存储方式
      * @param endpoints
@@ -45,13 +62,16 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(new InMemoryTokenStore())
-                .authenticationManager(authenticationManager);
+        /*endpoints.tokenStore(new InMemoryTokenStore())
+                .authenticationManager(authenticationManager);*/
+        endpoints.tokenStore(jwtTokenStore()).accessTokenConverter(jwtAccessTokenConverter());
     }
 
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security
+        /*security
                 .tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()").allowFormAuthenticationForClients();  //允许表单登录
+                .checkTokenAccess("isAuthenticated()").allowFormAuthenticationForClients();  //允许表单登录*/
+        security.tokenKeyAccess("isAuthenticated()")
+                .allowFormAuthenticationForClients();
     }
 }

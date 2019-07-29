@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * 配置Web管理及用户账号密码登录
+ * 配置安全策略
  */
 @Configuration
 @EnableWebSecurity
@@ -23,12 +24,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http
-                .requestMatchers().anyRequest()
-                .and()
-                .authorizeRequests().antMatchers("/oauth/**").permitAll()
-                .and()
+        // 表单登录
+        http.formLogin()
+                .loginPage("/index.html")
+                .loginProcessingUrl("/sso/login")
+            .and()
+                .authorizeRequests()
+                .antMatchers("/index.html","/sso/login","/server/test").permitAll()
+                .anyRequest().authenticated()
+            .and()
                 .csrf().disable();
+        // 登录测试
+        http.logout().logoutUrl("logout").clearAuthentication(true)
+                .invalidateHttpSession(true);
     }
 
     @Override

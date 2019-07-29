@@ -8,5 +8,6 @@ eureka:
     fetchRegistry: false
     server:
       waitTimeInMsWhenSyncEmpty: 0
+      enable-self-preservation: false
     service-url:
       defaultZone: http://${REGISTRY_USERNAME:user}:${REGISTRY_PASSWORD:admin}@localhost:${server.port}/eureka/
