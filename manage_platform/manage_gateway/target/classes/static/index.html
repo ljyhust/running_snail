@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+
+	<link href="static/ace/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="static/ace/css/font-awesome.min.css" />
+	
+	<!--[if IE 7]>
+	  <link rel="stylesheet" href="static/ace/css/font-awesome-ie7.min.css" />
+	<![endif]-->
+	
+	<!-- page specific plugin styles -->
+	<link rel="stylesheet" href="static/ace/css/jquery-ui-1.10.3.full.min.css" />
+	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<link rel="stylesheet" href="static/ace/css/ui.jqgrid.css" />
+	
+	<!-- ace styles -->
+	<link rel="stylesheet" href="static/ace/css/ace.min.css" />
+	<link rel="stylesheet" href="static/ace/css/ace-rtl.min.css" />
+	<link rel="stylesheet" href="static/ace/css/ace-skins.min.css" />
+	<link rel='stylesheet' href="static/css/jquery.jsonview.css"   />
+	<link rel='stylesheet' href='static/css/style.css' />
+	
+	<!--[if lte IE 8]>
+	  <link rel="stylesheet" href="static/ace/css/ace-ie.min.css" />
+	<![endif]-->
+	
+	<!-- inline styles related to this page -->
+	<!--[if !IE]> -->
+	
+	<script type="text/javascript">
+		window.jQuery || document.write("<script src='static/ace/js/jquery-2.0.3.min.js'>"+"<"+"script>");
+	</script>
+	<!-- <![endif]-->
+	
+	<!--[if IE]>
+	<script type="text/javascript">
+	 window.jQuery || document.write("<script src='static/ace/js/jquery-1.10.2.min.js'>"+"<"+"script>");
+	</script>
+	<![endif]-->
+	 
+	<script src="static/ace/js/jquery.slimscroll.min.js"></script>
+	<script src="static/ace/js/jquery.easy-pie-chart.min.js"></script>
+	<script src="static/ace/js/jquery.sparkline.min.js"></script>
+	<script src="static/ace/js/flot/jquery.flot.min.js"></script>
+	<script src="static/ace/js/flot/jquery.flot.pie.min.js"></script>
+	<script src="static/ace/js/flot/jquery.flot.resize.min.js"></script>
+	<!-- ace settings handler -->
+	<script src="static/ace/js/ace-extra.min.js"></script>
+	
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="static/ace/js/html5shiv.js"></script>
+	<script src="static/ace/js/respond.min.js"></script>
+	<![endif]-->
+	
+	<script type="text/javascript">
+		if("ontouchend" in document) document.write("<script src='static/ace/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
+	</script>
+	<script src="static/ace/js/bootstrap.min.js"></script>
+	<script src="static/ace/js/typeahead-bs2.min.js"></script>
+	
+	<!-- page specific plugin scripts -->
+	<script src="static/ace/js/jquery-ui-1.10.3.full.min.js"></script>
+	<script src="static/ace/js/jquery.ui.touch-punch.min.js"></script>
+	<script src="static/ace/js/date-time/bootstrap-datepicker.min.js"></script>
+	<script src="static/ace/js/jqGrid/jquery.jqGrid.min.js"></script>
+	<script src="static/ace/js/jqGrid/i18n/grid.locale-en.js"></script>
+	
+	<!--[if lte IE 8]>
+	  <script src="static/ace/js/excanvas.min.js"></script>
+	<![endif]-->
+	
+	<!-- ace scripts -->
+	
+	<script src="static/ace/js/ace-elements.min.js"></script>
+	<script src="static/ace/js/ace.min.js"></script>
+	
+	<script src="static/js/jquery.jsonview.js"   ></script>
+	<script src="static/js/my.js"   ></script>
+	<script src="static/js/bootstrapLoading.js"   ></script>
+	<script src="static/js/md5.js"   ></script>
+	<script src="static/js/bootstrap-typeahead.js"></script>
+<!--  <script src="static/js/json2.js"></script>-->
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+     <script type="text/javascript">
+     var dialog = null;
+     $(function($){
+    	 $(".nav-list li").click(function(){
+    		 if($(this).attr("url").indexOf('http') > -1 ){
+    			 window.open($(this).attr("url"),"_blank");
+    		 }else{
+    			 $("#myiframe").attr("src",$(this).attr("url"));  
+        		 $(this).siblings().removeClass("active");
+        		 $(this).addClass("active"); 
+    		 }
+    	 });
+    	 
+    	 var list = getApiHostList();
+    	 for(i in list){
+    		 if(list[i] != "" ){
+    			 $("#selhost").append("<option value='"+list[i]+"'>"+list[i]+"</option>");
+    		 }
+    	 }
+    	 
+    	 $("#selhost").val(getCookie("ehr_host_list_now"));
+    	 
+    	 $("#selhost").change(function(){
+    		 setCookie("ehr_host_list_now",$('#selhost').val());
+    		 window.location.reload();
+    	 });
+    	 
+    	 $("#addUrl").click(function(){
+    		 dialog =  $( "#dialog-message" ).removeClass('hide').dialog({
+    				modal: true,
+    				height: 500,
+    		        width: 800, 
+    			}); 
+    	 });
+    	 $("#delUrl").click(function(){
+    		 var ehr_host_list = getCookie("ehr_host_list");
+    		 ehr_host_list = ehr_host_list.replace($('#selhost option:selected').val(),"");
+    		 setCookie("ehr_host_list",ehr_host_list);
+    		 $('#selhost option:selected').remove();
+    		 setCookie("ehr_host_list_now",$('#selhost').val());
+    		 
+    	 });
+    	 
+    	 $("#addNewUrl").click(function () {
+    		 
+    		 var ehr_host_list = getCookie("ehr_host_list");
+        	 //检查是否存在
+        	 if(!$("#new_host_url").val() || ehr_host_list.indexOf($("#new_host_url").val()) > -1){
+        		 return ;
+        	 }
+        	 
+        	 setCookie ("ehr_host_list", ehr_host_list+$("#new_host_url").val()+",");
+        	 setCookie("ehr_host_list_now",$("#new_host_url").val() );
+        	 var index =  $('#selhost option').length ;
+        	 $("#selhost").append("<option value='0'>"+$("#new_host_url").val()+"</option>");
+        	 
+        	 
+        	 
+        	// $("#new_host_url").val("");
+        	 
+        	 dialog.dialog('close');
+         });
+     });
+     </script>
+  </head> 
+  <body>
+  <div class="navbar navbar-default" id="navbar">
+		<script type="text/javascript">
+			try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+		</script>
+
+		<div class="navbar-container" id="navbar-container">
+			<div class="navbar-header pull-left">
+				<a class="navbar-brand">
+					<small> <i class="icon-leaf"></i> EHR接口系统支撑平台 </small>
+				</a> 
+			</div> 
+			
+			<div style="margin: 5px !important;" class="navbar-header pull-right" >
+				<select id="selhost" class="form-control" style="width:250px;float:left"></select> <input type="button" id="addUrl" value="添加地址"/> <input type="button" id="delUrl" value="删除地址"/>
+			</div> 
+		</div> 
+	</div>
+  	 
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+		</script>
+		
+		<div class="sidebar" id="sidebar">
+			<script type="text/javascript">
+				try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+			</script>
+			<ul class="nav nav-list">
+				<li class="li active" url="logquery.html">
+					<a href="#" >
+						<i class="icon-dashboard"></i>
+						<span class="menu-text">日志查询</span>
+					</a>
+				</li>
+				<li class="li " url="apitest.html">
+					<a href="#" >
+						<i class="icon-dashboard"></i>
+						<span class="menu-text">接口测试</span>
+					</a>
+				</li>
+				<li class="li " url="http://172.16.140.75:10099/jenkins/login?from=%2Fjenkins%2F">
+					<a href="#" >
+						<i class="icon-dashboard" ></i>
+						<span class="menu-text">自动化部署</span>
+					</a>
+				</li>
+				<li class="li " url="http://192.168.2.21:12080/index/apiView.html">
+					<a href="#" >
+						<i class="icon-dashboard" ></i>
+						<span class="menu-text">接口文档</span>
+					</a>
+				</li>
+	 		</ul>
+ 		</div>
+ 		<!--
+ 		<div class="main-content" style="padding-left: 10px;">
+			<iframe id="myiframe" name="myiframe" width="100%"   onload="this.height=myiframe.document.body.scrollHeight" frameborder="0" src="logquery.html"></iframe>
+ 		</div> -->
+		<div class="main-content" style="padding-left: 10px;">
+			<iframe scrolling="no" id="myiframe" name="myiframe" frameborder="0" style="min-height:600px;min-width:600px;width:100%;height:100%;" src="logquery.html"></iframe>
+ 		</div>
+	</div>
+	
+	<div id="dialog-message" class="hide">
+		<h2>接口服务器地址 : </h2>
+		<p id="dl_api" >
+			<input type="text" id="new_host_url" style="width:250px;" >
+			<input type="button" value="确认" id="addNewUrl" />
+		</p>
+	</div>
+	
+	
+<script>
+  // 计算页面的实际高度，iframe自适应会用到
+  function calcPageHeight(doc) {
+      var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+      var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+      var height  = Math.max(cHeight, sHeight)
+      return height
+  }
+  //根据ID获取iframe对象
+  var ifr = document.getElementById('myiframe')
+  ifr.onload = function() {
+  	  //解决打开高度太高的页面后再打开高度较小页面滚动条不收缩
+  	  ifr.style.height='0px';
+      var iDoc = ifr.contentDocument || ifr.document
+      var height = calcPageHeight(iDoc)
+      if(height < 850){
+      	height = 850;
+      }
+      ifr.style.height = height + 'px';
+	  ifr.style.width="100%";
+  }
+</script>
+	
+  </body>
+</html>    
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,79 @@
+{
+	"msg": "",
+	"code": 0,
+	"reqId": "RQ1a82b8bb71594d0b97070f2808d50971",
+	"data": {
+		"yuntu": {
+			"tableid": "58b6399aafdf520ea84159cf",
+			"key": "9b5fc4b54aada032211000047d875f65"
+		},
+		"token": "AB4AB8914F63181D9A053329092502602A1516E07706FBFED4CC433B1FF315B9B26F66550E683F2461D3B544013F216A",
+		"verifyInfo": {
+			"phone": "13090000031",
+			"cardImg1": null,
+			"cardImg2": null,
+			"cardcode": null,
+			"policemanCode": null,
+			"realname": null,
+			"address": null
+		},
+		"user": {
+			"id": "0bc5046a702d4b259916608d7b7c9eec",
+			"cardcode": null,
+			"cardImg1": null,
+			"cardImg2": null,
+			"auth": "noAuth",
+			"realname": "13090000031",
+			"username": "13090000031",
+			"phone": "13090000031",
+			"email": null,
+			"address": null,
+			"salt": "91e994a1c1269fc3",
+			"score": "",
+			"useable": true,
+			"type": "foreUser",
+			"stype": "foreUser",
+			"authMsg": null,
+			"authingTime": "",
+			"auditedTime": "",
+			"currAddress": null,
+			"img": null,
+			"position": "",
+			"deviceID": "447d2867-15e2-3ed4-96c4-f303b2978cf0",
+			"liveNow": null,
+			"rlyCode": "{\"voipAccount\":\"8014822300001774\",\"dateCreated\":\"2017-03-31 11:40:04\",\"voipPwd\":\"HIlnGaCp\",\"subToken\":\"2323d2542b45e5fbdd48a089a4e48233\",\"subAccountSid\":\"b9fc19e415c311e79eaa6c92bf2c165d\"}",
+			"ytCode": "589",
+			"policemanCode": null,
+			"gtCode": "6d1cf6aa9197da8997ae6f84525143ad",
+			"lastLoginTime": "Tue Apr 18 16:15:36 CST 2017",
+			"online": true,
+			"fullAddr": null,
+			"jobs": {
+				"id": null,
+				"name": null,
+				"code": null,
+				"mark": null,
+				"deptId": null,
+				"img": null
+			},
+			"dept": {
+				"id": null,
+				"name": null,
+				"address": null,
+				"email": null,
+				"phone": null,
+				"level": null,
+				"mark": null,
+				"isLeaf": null,
+				"xyz": null,
+				"type": null,
+				"parentId": null,
+				"areaId": null,
+				"img": null,
+				"code": null,
+				"location": null,
+				"area": null
+			}
+		}
+	}
+}

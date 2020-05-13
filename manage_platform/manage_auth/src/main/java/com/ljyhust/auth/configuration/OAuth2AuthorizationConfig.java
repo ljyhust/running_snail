@@ -42,7 +42,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .scopes("server");
     }
 
-    @Bean
+    /*@Bean
     public TokenStore jwtTokenStore() {
         JwtAccessTokenConverter jwtAccessTokenConverter = jwtAccessTokenConverter();
         System.out.println(jwtAccessTokenConverter);
@@ -55,23 +55,23 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         return converter;
     }
 
-    /**
+    *//**
      * 指定token存储方式
-     * @param endpoints
+     //* @param endpoints
      * @throws Exception
-     */
+     *//*
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        /*endpoints.tokenStore(new InMemoryTokenStore())
-                .authenticationManager(authenticationManager);*/
+        *//*endpoints.tokenStore(new InMemoryTokenStore())
+                .authenticationManager(authenticationManager);*//*
         endpoints.tokenStore(jwtTokenStore()).accessTokenConverter(jwtAccessTokenConverter());
     }
-
+*/
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         /*security
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()").allowFormAuthenticationForClients();  //允许表单登录*/
-        security.tokenKeyAccess("isAuthenticated()")
+        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()")
                 .allowFormAuthenticationForClients();
     }
 }

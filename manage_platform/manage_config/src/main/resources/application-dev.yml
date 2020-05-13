@@ -1,0 +1,7 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://${REGISTRY_USERNAME:user}:${REGISTRY_PASSWORD:admin}@localhost:10011/eureka/
+

@@ -1,6 +1,8 @@
 spring:
   application:
     name: manage-config
+  profiles:
+    active: dev
   cloud:
     config:
       server:
@@ -19,10 +21,4 @@ security:
     name: ${CONFIG_USERNAME:user}
     password: ${CONFIG_PASSWORD:admin}
 
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://${REGISTRY_USERNAME:user}:${REGISTRY_PASSWORD:admin}@192.168.2.21:10011/eureka/
 

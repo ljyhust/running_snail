@@ -10,8 +10,8 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 /**
  * 配置资源认证服务器
  */
-@Configuration
-@EnableResourceServer
+//@Configuration
+//@EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter{
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {

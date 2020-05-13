@@ -87,6 +87,7 @@
 		<module>snail_media</module>
 		<module>manage_platform</module>
         <module>snail_demo</module>
+		<module>snail_algorithm</module>
     </modules>
 
 	<build>

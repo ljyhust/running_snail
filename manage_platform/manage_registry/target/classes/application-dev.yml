@@ -1,0 +1,13 @@
+# eurek服务端配置
+eureka:
+  instance:
+    prefer-ip-address: true
+    #hostname: eureka-registry-1
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    server:
+      waitTimeInMsWhenSyncEmpty: 0
+      enable-self-preservation: false
+    service-url:
+      defaultZone: http://${REGISTRY_USERNAME:user}:${REGISTRY_PASSWORD:admin}@localhost:${server.port}/eureka/

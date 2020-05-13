@@ -1,0 +1,14 @@
+server:
+  port: 10015
+  tomcat:
+    uriEncoding: UTF-8
+  context-path: /demo
+spring:
+  application:
+    name: demo
+
+redisCluster:
+  url: 192.168.0.49
+  port: 20806
+  timeout: 20000
+  auth: test|test

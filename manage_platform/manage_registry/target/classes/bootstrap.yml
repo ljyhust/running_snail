@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: manage-registry
+  profiles:
+    active: dev
+
+server:
+  port: 10011
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: ${REGISTRY_USERNAME:user}
+    password: ${REGISTRY_PASSWORD:admin}
+
+

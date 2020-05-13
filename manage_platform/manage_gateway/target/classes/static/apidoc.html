@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<link href="static/ace/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="static/ace/css/font-awesome.min.css" />
+
+<!--[if IE 7]>
+  <link rel="stylesheet" href="static/ace/css/font-awesome-ie7.min.css" />
+<![endif]-->
+
+<!-- page specific plugin styles -->
+<link rel="stylesheet" href="static/ace/css/jquery-ui-1.10.3.full.min.css" />
+<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<link rel="stylesheet" href="static/ace/css/ui.jqgrid.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="static/ace/css/ace.min.css" />
+<link rel="stylesheet" href="static/ace/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="static/ace/css/ace-skins.min.css" />
+<link rel='stylesheet' href="static/css/jquery.jsonview.css"   />
+<link rel='stylesheet' href='static/css/style.css' />
+
+<!--[if lte IE 8]>
+  <link rel="stylesheet" href="static/ace/css/ace-ie.min.css" />
+<![endif]-->
+
+<!-- inline styles related to this page -->
+<!--[if !IE]> -->
+
+<script type="text/javascript">
+	window.jQuery || document.write("<script src='static/ace/js/jquery-2.0.3.min.js'>"+"<"+"script>");
+</script>
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='static/ace/js/jquery-1.10.2.min.js'>"+"<"+"script>");
+</script>
+<![endif]-->
+ 
+<script src="static/ace/js/jquery.slimscroll.min.js"></script>
+<script src="static/ace/js/jquery.easy-pie-chart.min.js"></script>
+<script src="static/ace/js/jquery.sparkline.min.js"></script>
+<script src="static/ace/js/flot/jquery.flot.min.js"></script>
+<script src="static/ace/js/flot/jquery.flot.pie.min.js"></script>
+<script src="static/ace/js/flot/jquery.flot.resize.min.js"></script>
+<!-- ace settings handler -->
+<script src="static/ace/js/ace-extra.min.js"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="static/ace/js/html5shiv.js"></script>
+<script src="static/ace/js/respond.min.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+	if("ontouchend" in document) document.write("<script src='static/ace/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
+</script>
+<script src="static/ace/js/bootstrap.min.js"></script>
+<script src="static/ace/js/typeahead-bs2.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<script src="static/ace/js/jquery-ui-1.10.3.full.min.js"></script>
+<script src="static/ace/js/jquery.ui.touch-punch.min.js"></script>
+<script src="static/ace/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="static/ace/js/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="static/ace/js/jqGrid/i18n/grid.locale-en.js"></script>
+
+<!--[if lte IE 8]>
+  <script src="static/ace/js/excanvas.min.js"></script>
+<![endif]-->
+
+<!-- ace scripts -->
+
+<script src="static/ace/js/ace-elements.min.js"></script>
+<script src="static/ace/js/ace.min.js"></script>
+
+<script src="static/js/jquery.jsonview.js"   ></script>
+<script src="static/js/my.js"   ></script>
+<script src="static/js/bootstrapLoading.js"   ></script>
+<script src="static/js/md5.js"   ></script>
+<script src="static/js/bootstrap-typeahead.js"></script>
+<!--  <script src="static/js/json2.js"></script>-->
+<script>
+	
+	$(function() {
+		var json = {
+			"mixnick_get_response" : {
+				"nick" : "101NufynDYcbjf2cFQDd62j8M\/mjtyz6RoxQ2OL1c0e\/Bc="
+			}
+		};
+		$('#code-view').html(syntaxHighlight(json));
+	});
+</script>
+</head>
+
+<body>
+	<h1 style="font-size: 20px">auth/login (用户登录)</h1>
+	<div class="descript">将用户名转换成混淆后的值，为店铺前台模块授权改造提供数据订正接口</div>
+
+	<h2 style="font-size: 20px">请求参数</h2>
+	<table class="table table-striped descript">
+		<thead>
+			<tr>
+				<th>名称</th>
+				<th>类型</th>
+				<th>是否必须</th>
+				<th>示例</th>
+				<th>描述</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>nick</td>
+				<td>String</td>
+				<td>必须</td>
+				<td>tbtest001</td>
+				<td>用户名</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h1 style="font-size: 20px">响应参数</h1>
+	<pre id="code-view"></pre>
+</body>
+</html>
+
+
+
+
+

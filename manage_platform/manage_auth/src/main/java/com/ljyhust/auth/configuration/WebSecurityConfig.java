@@ -25,9 +25,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         // 表单登录
-        http.formLogin()
-                .loginPage("/index.html")
-                .loginProcessingUrl("/sso/login")
+        /*http.formLogin()
+                .loginPage("/login")
+                //.loginProcessingUrl("/sso/login")
             .and()
                 .authorizeRequests()
                 .antMatchers("/index.html","/sso/login","/server/test").permitAll()
@@ -36,7 +36,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .csrf().disable();
         // 登录测试
         http.logout().logoutUrl("logout").clearAuthentication(true)
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true);*/
+        http.requestMatchers()
+                .antMatchers("/login")
+                .antMatchers("/oauth/authorize")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/index.html").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage("/login").permitAll()
+                .and()
+                .csrf().disable();
     }
 
     @Override
